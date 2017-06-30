@@ -8,19 +8,21 @@ import cn.nukkit.level.Position;
  *
  * @author Yanziqing25
  */
-public abstract class Portal {
-    protected String name;
-    protected Position p1;
-    protected Position p2;
-    protected Position target;
-    protected int height;
-    protected int volume;
+public class Portal {
+    private String name;
+    private Position p1;
+    private Position p2;
+    private Position target;
+    private int height;
+    private int volume;
 
     public Portal(String name, Position p1, Position p2, Position target) {
         this.name = name;
         this.p1 = p1;
         this.p2 = p2;
         this.target = target;
+        this.height = this.p2.getFloorY() - this.p1.getFloorY() + 1;
+        this.volume = (this.p2.getFloorX() - this.p1.getFloorX() + 1) * (this.p2.getFloorZ() - this.p1.getFloorZ() + 1) * this.height;
     }
 
     /**
@@ -30,10 +32,6 @@ public abstract class Portal {
      */
     public String getName() {
         return this.name;
-    }
-
-    public boolean teleport(Player player) {
-        return player.teleport(this.target);
     }
 
     /**
@@ -63,39 +61,13 @@ public abstract class Portal {
         return this.volume;
     }
 
-    /**
-     * 检测传送门是否已被加载
-     *
-     * @return boolean
-     */
-    public boolean isLoaded() {
-        return PortalMain.getInstance().portalsMap.containsKey(this.name);
+    public boolean teleport(Player player) {
+        return player.teleport(this.target);
     }
 
-    /**
-     * 检测传送门是否已被加载
-     *
-     * @param name 传送门名称
-     *
-     * @return boolean
-     */
-    public static boolean isLoaded(String name) {
-        return PortalMain.getInstance().portalsMap.containsKey(name);
+    public boolean inside(Position playerPosition) {
+        return playerPosition.getFloorY() >= this.p1.getFloorY() && playerPosition.getFloorY() < this.p2.getFloorY() &&
+                playerPosition.getFloorX() >= this.p1.getFloorX() && playerPosition.getFloorX() <= this.p2.getFloorX() &&
+                playerPosition.getFloorZ() >= this.p1.getFloorZ() && playerPosition.getFloorZ() <= this.p2.getFloorZ();
     }
-
-    /**
-     * 获取传送门对象
-     *
-     * @param name 传送门名称
-     *
-     * @return Portal传送门的对象
-     */
-    public static Portal getPortal(String name) {
-        if (!isLoaded(name)) {
-            return null;
-        }
-        return PortalMain.getInstance().portalsMap.get(name);
-    }
-
-    public abstract boolean inside(Position playerPosition);
 }

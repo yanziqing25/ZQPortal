@@ -35,22 +35,22 @@ public class SetPortalCommand extends PluginCommand<PortalMain> implements Comma
             sender.sendMessage(TextFormat.RED + "请在游戏中使用此命令!");
             return false;
         }
+        if (args.length != 1) {
+            return false;
+        }
         if (portal.portalsConfig.exists(args[0])) {
             sender.sendMessage(TextFormat.RED + "传送门[" + args[0] + "]已存在!");
             return true;
         }
-        if (args.length == 1) {
-            if (portal.settingStatus != 0) {
-                sender.sendMessage(TextFormat.RED + "你已处于设置模式下,如需中途取消请输入命令\"/cancelportal\"");
-                return true;
-            }
-            portal.portalName = args[0];
-            portal.settingStatus = 1;
-            portal.setter = sender.getName();
-            sender.sendMessage(TextFormat.GREEN + "你已处于设置模式下!");
-            sender.sendMessage("请点击方块1");
+        if (portal.settingStatus != 0) {
+            sender.sendMessage(TextFormat.RED + "你已处于设置模式下,如需中途取消请输入命令\"/cancelportal\"");
             return true;
         }
-        return false;
+        portal.portalName = args[0];
+        portal.settingStatus = 1;
+        portal.setter = sender.getName();
+        sender.sendMessage(TextFormat.GREEN + "你已处于设置模式下!");
+        sender.sendMessage("请点击方块1");
+        return true;
     }
 }

@@ -31,12 +31,12 @@ public class RemovePortalCommand extends PluginCommand<PortalMain> implements Co
         if (!this.testPermission(sender)) {
             return false;
         }
+        if (args.length != 1) {
+            return false;
+        }
         if (!portal.portalsConfig.exists(args[0])) {
             sender.sendMessage(TextFormat.RED + "传送门[" + args[0] + "]不存在!");
             return true;
-        }
-        if (args.length != 1) {
-            return false;
         }
         if (portal.removePortal(args[0])) {
             sender.sendMessage(TextFormat.DARK_GREEN + "传送门[" + args[0] + "]移除成功!");

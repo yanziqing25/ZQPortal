@@ -20,12 +20,10 @@ public class PortalPlayerInsideTask extends PluginTask<PortalMain> {
             return;
         }
 
-        portalMain.getServer().getOnlinePlayers().forEach((UUID, Player) -> {
-            portalMain.portalsMap.forEach((name, portal) -> {
-                if (portal.inside(Player.getPosition())) {
-                    portal.teleport(Player);
-                }
-            });
-        });
+        portalMain.portalsMap.forEach((name, portal) -> portalMain.getServer().getOnlinePlayers().forEach((uuid, player) -> {
+            if (portal.inside(player.getPosition())) {
+                portal.teleport(player);
+            }
+        }));
     }
 }

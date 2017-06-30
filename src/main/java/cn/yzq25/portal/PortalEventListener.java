@@ -81,7 +81,6 @@ public class PortalEventListener implements Listener {
                     mainclass.settingStatus = 2;
                     return;
                 }
-
                 if (x2 - x1 <= 1 && z2 - z1 <= 1) {
                     player.sendMessage(TextFormat.RED + "传送门宽度至少为1!");
                     mainclass.settingStatus = 2;
@@ -97,20 +96,10 @@ public class PortalEventListener implements Listener {
                 targetWorld = event.getBlock().getLevel();
                 String portalName = mainclass.portalName;
 
-                if ((x2 - x1 > 1 && z2 == z1) || (z2 - z1 > 1 && x2 == x1)) {
-                    if (mainclass.addPortal(portalName, x1, y1, z1, x2, y2, z2, portalWorld, tx, ty, tz, targetWorld)) {
-                        player.sendMessage(TextFormat.DARK_GREEN + "传送门[" + portalName + "]设置成功!");
-                    } else {
-                        player.sendMessage(TextFormat.RED + "传送门[" + portalName + "]设置失败!");
-                    }
-                }
-
-                if (x2 - x1 > 1 && z2 - z1 > 1) {
-                    if (mainclass.addSpace(portalName, x1, y1, z1, x2, y2, z2, portalWorld, tx, ty, tz, targetWorld)) {
-                        player.sendMessage(TextFormat.DARK_GREEN + "传送舱[" + portalName + "]设置成功!");
-                    } else {
-                        player.sendMessage(TextFormat.RED + "传送舱[" + portalName + "]设置失败!");
-                    }
+                if (mainclass.addPortal(portalName, x1, y1, z1, x2, y2, z2, portalWorld, tx, ty, tz, targetWorld)) {
+                    player.sendMessage(TextFormat.DARK_GREEN + "传送门[" + portalName + "]设置成功!");
+                } else {
+                    player.sendMessage(TextFormat.RED + "传送门[" + portalName + "]设置失败!");
                 }
                 mainclass.settingStatus = 0;
                 mainclass.portalName = null;
@@ -120,7 +109,7 @@ public class PortalEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (event.isCancelled() || mainclass.portalsMap.isEmpty()) {
+        if (event.isCancelled() || mainclass.portalsMap.isEmpty() || !mainclass.checkingMode.equals("event")) {
             return;
         }
         Player player = event.getPlayer();
