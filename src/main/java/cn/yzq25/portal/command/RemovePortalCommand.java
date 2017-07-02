@@ -28,9 +28,6 @@ public class RemovePortalCommand extends PluginCommand<PortalMain> implements Co
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!this.testPermission(sender)) {
-            return false;
-        }
         if (args.length != 1) {
             return false;
         }

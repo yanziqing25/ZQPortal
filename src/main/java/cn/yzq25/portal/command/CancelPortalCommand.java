@@ -22,9 +22,6 @@ public class CancelPortalCommand extends PluginCommand<PortalMain> implements Co
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!this.testPermission(sender)) {
-            return false;
-        }
         if (portal.settingStatus != 0) {
             portal.settingStatus = 0;
             sender.sendMessage(TextFormat.GREEN + "取消设置模式成功!");

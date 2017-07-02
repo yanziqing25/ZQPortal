@@ -28,9 +28,6 @@ public class SetPortalCommand extends PluginCommand<PortalMain> implements Comma
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!this.testPermission(sender)) {
-            return false;
-        }
         if (sender instanceof ConsoleCommandSender) {
             sender.sendMessage(TextFormat.RED + "请在游戏中使用此命令!");
             return false;

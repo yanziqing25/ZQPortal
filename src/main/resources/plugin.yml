@@ -1,6 +1,6 @@
 name: ZQPortal
 main: cn.yzq25.portal.PortalMain
-version: "1.3.0"
+version: "1.3.1"
 api: ["1.0.0"]
 load: POSTWORLD
 
