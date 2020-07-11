@@ -1,10 +1,11 @@
 name: ZQPortal
 main: cn.yzq25.portal.PortalMain
 version: "1.4.1"
-api: ["1.0.0", "1.0.5"]
+api: ["1.0.0"]
 load: POSTWORLD
 softdepend:
 - ZQExtension
+- ZQWorlds
 depend:
 - ZQExtension
 

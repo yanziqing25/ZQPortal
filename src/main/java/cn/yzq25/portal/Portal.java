@@ -8,19 +8,17 @@ import cn.nukkit.level.Position;
  *
  * @author Yanziqing25
  */
-public class Portal {
+public abstract class Portal {
     private String name;
     private Position p1;
     private Position p2;
-    private Position target;
     private int height;
     private int volume;
 
-    public Portal(String name, Position p1, Position p2, Position target) {
+    public Portal(String name, Position p1, Position p2) {
         this.name = name;
         this.p1 = p1;
         this.p2 = p2;
-        this.target = target;
         this.height = this.p2.getFloorY() - this.p1.getFloorY() + 1;
         this.volume = (this.p2.getFloorX() - this.p1.getFloorX() + 1) * (this.p2.getFloorZ() - this.p1.getFloorZ() + 1) * this.height;
     }
@@ -32,15 +30,6 @@ public class Portal {
      */
     public String getName() {
         return this.name;
-    }
-
-    /**
-     * 获取传送目标地点
-     *
-     * @return 目标地点的Position
-     */
-    public Position getTarget() {
-        return this.target;
     }
 
     /**
@@ -61,13 +50,12 @@ public class Portal {
         return this.volume;
     }
 
-    public boolean teleport(Player player) {
-        return player.teleport(this.target);
-    }
-
     public boolean inside(Position playerPosition) {
-        return playerPosition.getFloorY() >= this.p1.getFloorY() && playerPosition.getFloorY() < this.p2.getFloorY() &&
+        return playerPosition.getLevel().getName().equals(p1.getLevel().getName()) &&
+                playerPosition.getFloorY() >= this.p1.getFloorY() && playerPosition.getFloorY() < this.p2.getFloorY() &&
                 playerPosition.getFloorX() >= this.p1.getFloorX() && playerPosition.getFloorX() <= this.p2.getFloorX() &&
                 playerPosition.getFloorZ() >= this.p1.getFloorZ() && playerPosition.getFloorZ() <= this.p2.getFloorZ();
     }
+
+    public abstract boolean teleport(Player player);
 }

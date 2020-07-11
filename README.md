@@ -16,11 +16,11 @@
 - `/removeportal [string: name]` 移除一个传送门
 - `/cancelportal` 取消设置传送门模式
 ### 权限
-        portal.command.setportal:
+        teleportPortal.command.setportal:
           default: op
-        portal.command.removeportal:
+        teleportPortal.command.removeportal:
           default: op
-        portal.command.removespace:
+        teleportPortal.command.removespace:
           default: op
-        portal.command.cancelportal:
+        teleportPortal.command.cancelportal:
           default: op

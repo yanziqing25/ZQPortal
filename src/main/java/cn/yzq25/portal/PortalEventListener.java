@@ -28,17 +28,15 @@ public class PortalEventListener implements Listener {
     private int tz = 0;
     private Level targetWorld;
 
-    private int t = 0;//临时数据
+    private int t = 0; //临时数据
 
-    public PortalEventListener(PortalMain mainclass) {
-        this.mainclass = mainclass;
+    public PortalEventListener() {
+        this.mainclass = PortalMain.getInstance();
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
+    public void onSettingPortal(PlayerInteractEvent event) {
+        if(event.getAction() == PlayerInteractEvent.Action.LEFT_CLICK_AIR || event.getAction() == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) return;
         Player player = event.getPlayer();
         if (!player.getName().equals(mainclass.setter)) {
             return;
@@ -51,6 +49,7 @@ public class PortalEventListener implements Listener {
                 y1 = event.getBlock().getFloorY();
                 z1 = event.getBlock().getFloorZ();
                 mainclass.settingStatus = 2;
+                event.setCancelled();
                 player.sendMessage(TextFormat.BLUE + "请点击方块2");
                 return;
             case 2:
@@ -79,43 +78,59 @@ public class PortalEventListener implements Listener {
                 if (y2 - y1 <= 1) {
                     player.sendMessage(TextFormat.RED + "传送门高度至少为1!");
                     mainclass.settingStatus = 2;
+                    event.setCancelled();
                     return;
                 }
                 if (x2 - x1 <= 1 && z2 - z1 <= 1) {
                     player.sendMessage(TextFormat.RED + "传送门宽度至少为1!");
                     mainclass.settingStatus = 2;
+                    event.setCancelled();
                     return;
                 }
-                mainclass.settingStatus = 3;
-                player.sendMessage(TextFormat.GREEN + "请点击目标地点");
+                if (mainclass.type == 1) {
+                    mainclass.settingStatus = 3;
+                    player.sendMessage(TextFormat.GREEN + "请点击目标地点");
+                } else if (mainclass.type == 2) {
+                    if (mainclass.addTransferPortal(mainclass.portalName, x1, y1, z1, x2, y2, z2, portalWorld, mainclass.address)) {
+                        player.sendMessage(TextFormat.DARK_GREEN + "传送门[" + mainclass.portalName + "]设置成功!");
+                    } else {
+                        player.sendMessage(TextFormat.RED + "传送门[" + mainclass.portalName + "]设置失败!");
+                    }
+                    mainclass.settingStatus = 0;
+                    mainclass.portalName = null;
+                    mainclass.setter = null;
+                    mainclass.type = 0;
+                    mainclass.address = null;
+                }
+                event.setCancelled();
                 return;
             case 3:
                 tx = event.getBlock().getFloorX();
                 ty = event.getBlock().getFloorY();
                 tz = event.getBlock().getFloorZ();
                 targetWorld = event.getBlock().getLevel();
-                String portalName = mainclass.portalName;
-
-                if (mainclass.addPortal(portalName, x1, y1, z1, x2, y2, z2, portalWorld, tx, ty, tz, targetWorld)) {
-                    player.sendMessage(TextFormat.DARK_GREEN + "传送门[" + portalName + "]设置成功!");
+                if (mainclass.addTeleportPortal(mainclass.portalName, x1, y1, z1, x2, y2, z2, portalWorld, tx, ty, tz, targetWorld)) {
+                    player.sendMessage(TextFormat.DARK_GREEN + "传送门[" + mainclass.portalName + "]设置成功!");
                 } else {
-                    player.sendMessage(TextFormat.RED + "传送门[" + portalName + "]设置失败!");
+                    player.sendMessage(TextFormat.RED + "传送门[" + mainclass.portalName + "]设置失败!");
                 }
                 mainclass.settingStatus = 0;
                 mainclass.portalName = null;
                 mainclass.setter = null;
+                event.setCancelled();
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (event.isCancelled() || mainclass.portalsMap.isEmpty() || !mainclass.checkingMode.equals("event")) {
+        if (mainclass.portalsMap.isEmpty() || !mainclass.checkingMode.equals("event")) {
             return;
         }
         Player player = event.getPlayer();
         mainclass.portalsMap.forEach((name, portal) -> {
             if (portal.inside(event.getTo())) {
                 portal.teleport(player);
+                //InetSocketAddress addr = new InetSocketAddress("dizhi", 19132);
             }
         });
     }
