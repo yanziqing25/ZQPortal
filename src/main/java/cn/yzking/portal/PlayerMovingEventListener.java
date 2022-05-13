@@ -18,7 +18,10 @@ public class PlayerMovingEventListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event) {
         for (Portal portal : plugin.portals) {
-            if (portal.inside(event.getTo())) portal.teleport(event.getPlayer());
+            if (portal.inside(event.getTo())) {
+                portal.teleport(event.getPlayer());
+                break;
+            }
         }
     }
 }

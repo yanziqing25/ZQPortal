@@ -1,6 +1,6 @@
 name: ZQPortal
 main: cn.yzking.portal.PortalMain
-version: "2.0.0"
+version: "2.0.1"
 api: ["1.0.13"]
 load: POSTWORLD
 softdepend:
