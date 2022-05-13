@@ -53,7 +53,7 @@ public class PortalMain extends PluginBase {
         loadPortalConfig();
         getServer().getPluginManager().registerEvents(new SetPortalEventListener(this), this);
         if (checkingMode.equals("task")) {
-            getServer().getScheduler().scheduleRepeatingTask(new CheckPlayerInsideTask(this), getConfig().getInt("interval", 1) * 20);
+            getServer().getScheduler().scheduleRepeatingTask(new CheckPlayerInsideTask(this), getConfig().getInt("interval", 1) * 20, true);
         } else {
             getServer().getPluginManager().registerEvents(new PlayerMovingEventListener(this), this);
         }
