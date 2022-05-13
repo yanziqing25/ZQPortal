@@ -1,4 +1,4 @@
-package cn.yzq25.portal;
+package cn.yzking.portal;
 
 import cn.nukkit.Player;
 import cn.nukkit.level.Position;
@@ -9,11 +9,11 @@ import cn.nukkit.level.Position;
  * @author Yanziqing25
  */
 public abstract class Portal {
-    private String name;
-    private Position p1;
-    private Position p2;
-    private int height;
-    private int volume;
+    private final String name;
+    private final Position p1;
+    private final Position p2;
+    private final int height;
+    private final int volume;
 
     public Portal(String name, Position p1, Position p2) {
         this.name = name;
@@ -30,6 +30,24 @@ public abstract class Portal {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * 传送门的第一个方块
+     *
+     * @return 传送门的第一个方块Position
+     */
+    public Position getPosition1() {
+        return this.p1;
+    }
+
+    /**
+     * 传送门的第二个方块
+     *
+     * @return 传送门的第二个方块Position
+     */
+    public Position getPosition2() {
+        return this.p2;
     }
 
     /**

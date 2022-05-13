@@ -1,7 +1,7 @@
 name: ZQPortal
-main: cn.yzq25.portal.PortalMain
-version: "1.4.1"
-api: ["1.0.0"]
+main: cn.yzking.portal.PortalMain
+version: "2.0.0"
+api: ["1.0.13"]
 load: POSTWORLD
 softdepend:
 - ZQExtension
@@ -11,14 +11,12 @@ depend:
 
 author: Yanziqing25
 description: 传送门插件
-website: http://www.yzq25.cn
+website: https://www.yzking.cn
 
 permissions:
-  portal.command:
-    children:
-      portal.command.setportal:
-        default: op
-      portal.command.removeportal:
-        default: op
-      portal.command.cancelportal:
-        default: op
+  portal.command.setportal:
+    default: op
+  portal.command.deleteportal:
+    default: op
+  portal.command.cancelportal:
+    default: op

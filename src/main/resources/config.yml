@@ -1,3 +1,8 @@
+# 语言，目前仅"zh-cn"
+language: zh-cn
+# 插件更新检测开关，"true"或"false"
 check_update: true
-#检测玩家是否在传送门里时使用的模式,"event"或"task"
-checking_mode: event
+# 检测玩家是否在传送门里时使用的模式，可选"event"或"task"
+checking_mode: task
+# task模式检测间隔，单位：秒（仅"checking_mode"为task时生效）
+interval: 1

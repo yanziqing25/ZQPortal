@@ -1,10 +1,10 @@
-package cn.yzq25.portal;
+package cn.yzking.portal;
 
 import cn.nukkit.Player;
 import cn.nukkit.level.Position;
 
 public class TeleportPortal extends Portal {
-    private Position target;
+    private final Position target;
 
     public TeleportPortal(String name, Position p1, Position p2, Position target) {
         super(name, p1, p2);

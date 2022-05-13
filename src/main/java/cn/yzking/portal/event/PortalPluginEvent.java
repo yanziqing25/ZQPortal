@@ -1,4 +1,4 @@
-package cn.yzq25.portal.event;
+package cn.yzking.portal.event;
 
 import cn.nukkit.event.Event;
 

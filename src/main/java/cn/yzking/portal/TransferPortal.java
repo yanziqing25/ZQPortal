@@ -1,4 +1,4 @@
-package cn.yzq25.portal;
+package cn.yzking.portal;
 
 import cn.nukkit.Player;
 import cn.nukkit.level.Position;
@@ -6,7 +6,7 @@ import cn.nukkit.level.Position;
 import java.net.InetSocketAddress;
 
 public class TransferPortal extends Portal {
-    private InetSocketAddress target;
+    private final InetSocketAddress target;
 
     public TransferPortal(String name, Position p1, Position p2, InetSocketAddress target) {
         super(name, p1, p2);
@@ -25,8 +25,7 @@ public class TransferPortal extends Portal {
     @Override
     public boolean teleport(Player player) {
         player.teleport(player.getLevel().getSafeSpawn());
-
-        player.transfer(target);
+        player.transfer(this.target);
         return true;
     }
 }
