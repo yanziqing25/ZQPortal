@@ -57,14 +57,14 @@ public class SetPortalEventListener implements Listener {
                     x1 = x1 ^ x2;
                 }
                 if (y1 > y2) {
-                    x1 = x1 ^ x2;
-                    x2 = x1 ^ x2;
-                    x1 = x1 ^ x2;
+                    y1 = y1 ^ y2;
+                    y2 = y1 ^ y2;
+                    y1 = y1 ^ y2;
                 }
                 if (z1 > z2) {
-                    x1 = x1 ^ x2;
-                    x2 = x1 ^ x2;
-                    x1 = x1 ^ x2;
+                    z1 = z1 ^ z2;
+                    z2 = z1 ^ z2;
+                    z1 = z1 ^ z2;
                 }
 
                 if (y2 - y1 <= 1) {
